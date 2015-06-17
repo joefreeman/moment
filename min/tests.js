@@ -32160,12 +32160,10 @@
         }
     }
 
-    var helpers_each = each;
-
     module('days in month');
 
     test('days in month', function (assert) {
-        helpers_each([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], function (days, i) {
+        each([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], function (days, i) {
             var firstDay = moment([2012, i]),
                 lastDay  = moment([2012, i, days]);
             assert.equal(firstDay.daysInMonth(), days, firstDay.format('L') + ' should have ' + days + ' days.');
@@ -33532,6 +33530,12 @@
         assert.equal(moment(b).utc().calendar(), 'Yesterday at 11:59 PM', 'Yesterday at 11:59 PM, not Today, or the wrong time');
         assert.equal(moment(c).local().calendar(), 'Yesterday at 11:59 PM', 'Yesterday at 11:59 PM, not Today, or the wrong time');
         assert.equal(moment(c).local().calendar(d), 'Tomorrow at 11:59 PM', 'Tomorrow at 11:59 PM, not Yesterday, or the wrong time');
+    });
+
+    test('calendar with custom formats', function (assert) {
+        assert.equal(moment().calendar(null, {sameDay: '[Today]'}), 'Today', 'Today');
+        assert.equal(moment().add(1, 'days').calendar(null, {nextDay: '[Tomorrow]'}), 'Tomorrow', 'Tomorrow');
+        assert.equal(moment([1985, 1, 4]).calendar(null, {sameElse: 'YYYY-MM-DD'}), '1985-02-04', 'Else');
     });
 
     test('invalid', function (assert) {
@@ -35617,12 +35621,10 @@
         }
     }
 
-    var helpers_each = each;
-
     module('locale', {
         setup : function () {
             // TODO: Remove once locales are switched to ES6
-            helpers_each([{
+            each([{
                 name: 'en-gb',
                 data: {}
             }, {
